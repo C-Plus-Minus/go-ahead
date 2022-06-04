@@ -7,49 +7,37 @@ import (
 )
 
 func TestFlatten(t *testing.T) {
-	t.Run("transforms book slice to string slice", func(t *testing.T) {
+	t.Run("transforms homogeneous nested slice to string slice", func(t *testing.T) {
 		test := [][][]string{
 			{
-				{"bla"},
-				{"blubb"},
+				{"Sorry Mario"},
+				{"but", "our"},
 			},
 			{
-				{"tralala"},
+				{"princess is in another castle"},
 			},
 		}
-		x := apply.Flatten(test)
 
-		require.Equal(t, []string{"bla, blubb"}, x)
+		flattened := apply.Flatten[string](test)
+
+		require.Equal(t, []string{"Sorry Mario", "but", "our", "princess is in another castle"}, flattened)
 	})
 
-	/*
-		type batch struct {
-			ID    int
-			Books []book
+	t.Run("transforms heterogeneous slice to string slice", func(t *testing.T) {
+		test := [][]any{
+			{
+				10,
+				[]bool{true, false},
+			},
+			{
+				"string",
+				[]string{"array"},
+				[][]float64{{4.2}},
+			},
 		}
 
-		t.Run("transforms complex slice to flat book slice", func(t *testing.T) {
-			batches := []batch{
-				{
-					ID:    0,
-					Books: testSet[0:2],
-				},
-				{
-					ID:    1,
-					Books: testSet[2:],
-				},
-			}
+		flattened := apply.Flatten[any](test)
 
-			mapped := apply.Map(batches, func(i int, it batch) []book {
-				m := make(map[int][]book)
-				m[it.ID] = it.Books
-				for _, b := range it.Books {
-					books = append(books, b)
-				}
-				return books
-			})
-
-			require.Equal(t, testSet, mapped)
-		})
-	*/
+		require.Equal(t, []any{10, true, false, "string", "array", 4.2}, flattened)
+	})
 }

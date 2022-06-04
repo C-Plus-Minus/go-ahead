@@ -1,16 +1,22 @@
 package apply
 
-func Flatten[T any](t []T) (flat []T) {
-	// FIXME
-	for _, tt := range t {
-		var f interface{} = tt // workaround, as t.(type) won't compile
-		switch f.(type) {
-		case T:
-			flat = append(flat, f.(T))
-		case []T:
-			Flatten(f.([]T))
-		}
-	}
+import (
+	"reflect"
+)
 
-	return flat
+func Flatten[T any](slice any) (flat []T) {
+	return flatten[T](slice, nil)
+}
+
+func flatten[T any](iterable any, remember []T) []T {
+	switch reflect.TypeOf(iterable).Kind() {
+	case reflect.Slice | reflect.Array:
+		v := reflect.ValueOf(iterable)
+		for i := 0; i < v.Len(); i++ {
+			remember = flatten(v.Index(i).Interface(), remember)
+		}
+	default:
+		remember = append(remember, iterable.(T))
+	}
+	return remember
 }
