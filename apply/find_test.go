@@ -1,8 +1,8 @@
 package apply_test
 
 import (
+	"github.com/c-plus-minus/go-ahead/apply"
 	"github.com/stretchr/testify/require"
-	"go-ahead/apply"
 	"strings"
 	"testing"
 )
