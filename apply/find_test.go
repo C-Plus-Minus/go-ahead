@@ -2,39 +2,40 @@ package apply_test
 
 import (
 	"github.com/c-plus-minus/go-ahead/apply"
-	"github.com/stretchr/testify/require"
+	"github.com/c-plus-minus/go-ahead/testkit"
+	"github.com/c-plus-minus/go-ahead/testkit/expect"
 	"strings"
 	"testing"
 )
 
 func TestFind(t *testing.T) {
 	t.Run("returns first book whose author contains an r", func(t *testing.T) {
-		expected := book{"Charlie"}
+		wanted := testkit.Book{Author: "Charlie"}
 
-		actual := apply.Find(testSet, func(i int, it book) bool {
+		got := apply.Find(testkit.Set, func(i int, it testkit.Book) bool {
 			return strings.Contains(it.Author, "r")
 		})
 
-		require.Equal(t, expected, *actual)
+		expect.Equal(t, wanted, *got)
 	})
 
 	t.Run("returns book of given author", func(t *testing.T) {
-		expected := book{"Erin"}
+		wanted := testkit.Book{Author: "Erin"}
 
-		actual := apply.Find(testSet, func(i int, it book) bool {
+		got := apply.Find(testkit.Set, func(i int, it testkit.Book) bool {
 			return it.Author == "Erin"
 		})
 
-		require.Equal(t, expected, *actual)
+		expect.Equal(t, wanted, *got)
 	})
 
 	t.Run("returns no books for unknown author", func(t *testing.T) {
-		var expected *book = nil
+		var wanted *testkit.Book = nil
 
-		actual := apply.Find(testSet, func(i int, it book) bool {
+		got := apply.Find(testkit.Set, func(i int, it testkit.Book) bool {
 			return it.Author == "Mario"
 		})
 
-		require.Equal(t, expected, actual)
+		expect.Equal(t, wanted, got)
 	})
 }

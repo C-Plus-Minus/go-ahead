@@ -2,7 +2,7 @@ package apply_test
 
 import (
 	"github.com/c-plus-minus/go-ahead/apply"
-	"github.com/stretchr/testify/require"
+	"github.com/c-plus-minus/go-ahead/testkit/expect"
 	"testing"
 )
 
@@ -20,7 +20,7 @@ func TestFlatten(t *testing.T) {
 
 		flattened := apply.Flatten[string](test)
 
-		require.Equal(t, []string{"Sorry Mario", "but", "our", "princess is in another castle"}, flattened)
+		expect.Equal(t, []string{"Sorry Mario", "but", "our", "princess is in another castle"}, flattened)
 	})
 
 	t.Run("transforms heterogeneous slice to string slice", func(t *testing.T) {
@@ -38,6 +38,6 @@ func TestFlatten(t *testing.T) {
 
 		flattened := apply.Flatten[any](test)
 
-		require.Equal(t, []any{10, true, false, "string", "array", 4.2}, flattened)
+		expect.Equal(t, []any{10, true, false, "string", "array", 4.2}, flattened)
 	})
 }

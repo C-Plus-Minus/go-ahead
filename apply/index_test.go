@@ -2,39 +2,40 @@ package apply_test
 
 import (
 	"github.com/c-plus-minus/go-ahead/apply"
-	"github.com/stretchr/testify/require"
+	"github.com/c-plus-minus/go-ahead/testkit"
+	"github.com/c-plus-minus/go-ahead/testkit/expect"
 	"strings"
 	"testing"
 )
 
 func TestFindIndex(t *testing.T) {
 	t.Run("returns index of first book whose author contains an r", func(t *testing.T) {
-		expected := 2
+		wanted := 2
 
-		actual := apply.FindIndex(testSet, func(i int, it book) bool {
+		got := apply.FindIndex(testkit.Set, func(i int, it testkit.Book) bool {
 			return strings.Contains(it.Author, "r")
 		})
 
-		require.Equal(t, expected, actual)
+		expect.Equal(t, wanted, got)
 	})
 
 	t.Run("returns index of book with given author", func(t *testing.T) {
-		expected := 3
+		wanted := 3
 
-		actual := apply.FindIndex(testSet, func(i int, it book) bool {
+		got := apply.FindIndex(testkit.Set, func(i int, it testkit.Book) bool {
 			return it.Author == "Erin"
 		})
 
-		require.Equal(t, expected, actual)
+		expect.Equal(t, wanted, got)
 	})
 
 	t.Run("returns negative index for unknown author", func(t *testing.T) {
-		expected := -1
+		wanted := -1
 
-		actual := apply.FindIndex(testSet, func(i int, it book) bool {
+		got := apply.FindIndex(testkit.Set, func(i int, it testkit.Book) bool {
 			return it.Author == "Mario"
 		})
 
-		require.Equal(t, expected, actual)
+		expect.Equal(t, wanted, got)
 	})
 }

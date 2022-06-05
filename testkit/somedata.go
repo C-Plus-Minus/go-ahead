@@ -1,20 +1,20 @@
-package apply_test
+package testkit
 
-type person struct {
+type Person struct {
 	Comment string
-	Name    name
+	Name    Name
 }
 
-type name struct {
+type Name struct {
 	First string
 	Last  string
 }
 
-type book struct {
+type Book struct {
 	Author string
 }
 
-var testSet = []book{
+var Set = []Book{
 	{"Alice"},
 	{"Bob"},
 	{"Charlie"},
