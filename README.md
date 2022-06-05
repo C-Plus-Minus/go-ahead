@@ -1,7 +1,7 @@
-## What is it?
+### What is it?
 Fancy functions for fashion-conscious gophers missing their lambdas 🎩🍷
 
-## How to use it?
+### How to use it?
 It's really easy: 
 
 All functions can be found inside the go-ahead/apply package. \
@@ -13,6 +13,6 @@ index := apply.FindIndex(testkit.Set, func(i int, it testkit.Book) bool {
 ```
 For more practical examples take a look at the tests.
 
-## Dependencies?
+### Dependencies?
 Nope
 
